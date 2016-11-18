@@ -55,10 +55,12 @@ public:
 	inline std::shared_ptr<GuiComponent> getSelectedComponent()
 	{
 		GridEntry* e = getCellAt(mCursor);
-		if(e)
+		if(e) 
+        {
 			return e->component;
-		else
+        }else {
 			return nullptr;
+        }
 	}
 
 	void onFocusLost() override;

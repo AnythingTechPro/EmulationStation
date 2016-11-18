@@ -169,8 +169,10 @@ public:
 		mLeftArrow.setResize(0, mText.getFont()->getLetterHeight());
 		mRightArrow.setResize(0, mText.getFont()->getLetterHeight());
 
-		if(mSize.x() < (mLeftArrow.getSize().x() + mRightArrow.getSize().x()))
+		if(mSize.x() < (mLeftArrow.getSize().x() + mRightArrow.getSize().x())) 
+        {
 			LOG(LogWarning) << "OptionListComponent too narrow!";
+        }
 
 		mText.setSize(mSize.x() - mLeftArrow.getSize().x() - mRightArrow.getSize().x(), mText.getFont()->getHeight());
 
@@ -257,8 +259,10 @@ private:
 		assert(mMultiSelect == false);
 		for(unsigned int i = 0; i < mEntries.size(); i++)
 		{
-			if(mEntries.at(i).selected)
+			if(mEntries.at(i).selected) 
+            {
 				return i;
+            }
 		}
 
 		LOG(LogWarning) << "OptionListComponent::getSelectedId() - no selected element found, defaulting to 0";
@@ -292,8 +296,11 @@ private:
 					mText.setSize(0, mText.getSize().y());
 					setSize(mText.getSize().x() + mLeftArrow.getSize().x() + mRightArrow.getSize().x() + 24, mText.getSize().y());
 					if(mParent) // hack since theres no "on child size changed" callback atm...
+                    {
 						mParent->onSizeChanged();
-					break;
+                    }
+					
+                    break;
 				}
 			}
 		}
@@ -302,8 +309,10 @@ private:
 	std::vector<HelpPrompt> getHelpPrompts() override
 	{
 		std::vector<HelpPrompt> prompts;
-		if(!mMultiSelect)
+		if(!mMultiSelect) 
+        {
 			prompts.push_back(HelpPrompt("left/right", "change"));
+        }
 		
 		prompts.push_back(HelpPrompt("a", "select"));
 		return prompts;

@@ -36,11 +36,14 @@ GuiDetectDevice::GuiDetectDevice(Window* window, bool firstRun, const std::funct
 	std::stringstream deviceInfo;
 	int numDevices = InputManager::getInstance()->getNumJoysticks();
 	
-	if(numDevices > 0)
+	if(numDevices > 0) 
+    {
 		deviceInfo << numDevices << " GAMEPAD" << (numDevices > 1 ? "S" : "") << " DETECTED";
-	else
+    }else {
 		deviceInfo << "NO GAMEPADS DETECTED";
-	mDeviceInfo = std::make_shared<TextComponent>(mWindow, deviceInfo.str(), Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
+    }
+	
+    mDeviceInfo = std::make_shared<TextComponent>(mWindow, deviceInfo.str(), Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
 	mGrid.setEntry(mDeviceInfo, Vector2i(0, 1), false, true);
 
 	// message
@@ -107,12 +110,13 @@ void GuiDetectDevice::update(int deltaTime)
 		// If ES starts and if a known device is connected after startup skip controller configuration
 		if(mFirstRun && fs::exists(InputManager::getConfigPath()) && InputManager::getInstance()->getNumConfiguredDevices() > 0)
 		{
-			if(mDoneCallback)
+			if(mDoneCallback) 
+            {
 				mDoneCallback();
+            }
+
 			delete this; // delete GUI element
-		}
-		else
-		{
+		}else {
 			mHoldTime -= deltaTime;
 			const float t = (float)mHoldTime / HOLD_TIME;
 			unsigned int c = (unsigned char)(t * 255);

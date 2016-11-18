@@ -186,8 +186,10 @@ protected:
 	bool listInput(int velocity) // a velocity of 0 = stop scrolling
 	{
 		// generate an onCursorChanged event in the stopped state when the user lets go of the key
-		if(velocity == 0 && mScrollVelocity != 0)
+		if(velocity == 0 && mScrollVelocity != 0) 
+        {
 			onCursorChanged(CURSOR_STOPPED);
+        }
 
 		mScrollVelocity = velocity;
 		mScrollTier = 0;
@@ -204,15 +206,19 @@ protected:
 		// update the title overlay opacity
 		const int dir = (mScrollTier >= mTierList.count - 1) ? 1 : -1; // fade in if scroll tier is >= 1, otherwise fade out
 		int op = mTitleOverlayOpacity + deltaTime*dir; // we just do a 1-to-1 time -> opacity, no scaling
-		if(op >= 255)
+		if(op >= 255) 
+        {
 			mTitleOverlayOpacity = 255;
-		else if(op <= 0)
+        } else if(op <= 0) {
 			mTitleOverlayOpacity = 0;
-		else
+        }else {
 			mTitleOverlayOpacity = (unsigned char)op;
+        }
 
-		if(mScrollVelocity == 0 || size() < 2)
+		if(mScrollVelocity == 0 || size() < 2) 
+        {
 			return;
+        }
 
 		mScrollCursorAccumulator += deltaTime;
 		mScrollTierAccumulator += deltaTime;
@@ -234,14 +240,18 @@ protected:
 		}
 
 		// actually perform the scrolling
-		for(int i = 0; i < scrollCount; i++)
+		for(int i = 0; i < scrollCount; i++) 
+        {
 			scroll(mScrollVelocity);
+        }
 	}
 
 	void listRenderTitleOverlay(const Eigen::Affine3f& trans)
 	{
-		if(size() == 0 || !mTitleOverlayFont || mTitleOverlayOpacity == 0)
+		if(size() == 0 || !mTitleOverlayFont || mTitleOverlayOpacity == 0) 
+        {
 			return;
+        }
 
 		// we don't bother caching this because it's only two letters and will change pretty much every frame if we're scrolling
 		const std::string text = getSelectedName().size() >= 2 ? getSelectedName().substr(0, 2) : "??";
@@ -262,8 +272,10 @@ protected:
 
 	void scroll(int amt)
 	{
-		if(mScrollVelocity == 0 || size() < 2)
+		if(mScrollVelocity == 0 || size() < 2) 
+        {
 			return;
+        }
 
 		int cursor = mCursor + amt;
 		int absAmt = amt < 0 ? -amt : amt;
@@ -286,14 +298,21 @@ protected:
 				mScrollTier = 0;
 			}
 		}else{
-			while(cursor < 0)
+			while(cursor < 0) 
+            {
 				cursor += size();
-			while(cursor >= size())
+            }
+
+			while(cursor >= size()) 
+            {
 				cursor -= size();
+            }
 		}
 
-		if(cursor != mCursor)
+		if(cursor != mCursor) 
+        {
 			onScroll(absAmt);
+        }
 
 		mCursor = cursor;
 		onCursorChanged((mScrollTier > 0) ? CURSOR_SCROLLING : CURSOR_STOPPED);

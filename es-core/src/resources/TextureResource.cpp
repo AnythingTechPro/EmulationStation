@@ -91,10 +91,12 @@ bool TextureResource::isTiled() const
 
 void TextureResource::bind() const
 {
-	if(mTextureID != 0)
+	if(mTextureID != 0) 
+    {
 		glBindTexture(GL_TEXTURE_2D, mTextureID);
-	else
+    }else {
 		LOG(LogError) << "Tried to bind uninitialized texture!";
+    }
 }
 
 
@@ -115,8 +117,10 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path, b
 	auto foundTexture = sTextureMap.find(key);
 	if(foundTexture != sTextureMap.end())
 	{
-		if(!foundTexture->second.expired())
+		if(!foundTexture->second.expired()) 
+        {
 			return foundTexture->second.lock();
+        }
 	}
 
 	// need to create it
@@ -132,7 +136,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path, b
 		rm->addReloadable(tex);
 		tex->reload(rm);
 		return tex;
-	}else{
+	}else {
 		// normal texture
 		tex = std::shared_ptr<TextureResource>(new TextureResource(key.first, tile));
 		sTextureMap[key] = std::weak_ptr<TextureResource>(tex);
@@ -150,8 +154,10 @@ bool TextureResource::isInitialized() const
 
 size_t TextureResource::getMemUsage() const
 {
-	if(!mTextureID || mTextureSize.x() == 0 || mTextureSize.y() == 0)
+	if(!mTextureID || mTextureSize.x() == 0 || mTextureSize.y() == 0) 
+    {
 		return 0;
+    }
 
 	return mTextureSize.x() * mTextureSize.y() * 4;
 }

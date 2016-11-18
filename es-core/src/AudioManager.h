@@ -1,11 +1,8 @@
-#ifndef _AUDIOMANAGER_H_
-#define _AUDIOMANAGER_H_
+#pragma once
 
 #include <vector>
 #include <memory>
-
 #include "SDL_audio.h"
-
 #include "Sound.h"
 
 
@@ -33,5 +30,3 @@ public:
 
 	virtual ~AudioManager();
 };
-
-#endif

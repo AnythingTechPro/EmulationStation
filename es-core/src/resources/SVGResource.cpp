@@ -44,16 +44,20 @@ void SVGResource::initFromMemory(const char* file, size_t length)
 		return;
 	}
 
-	if(mLastWidth && mLastHeight)
+	if(mLastWidth && mLastHeight) 
+    {
 		rasterizeAt(mLastWidth, mLastHeight);
-	else
+    }else {
 		rasterizeAt((size_t)round(mSVGImage->width), (size_t)round(mSVGImage->height));
+    }
 }
 
 void SVGResource::rasterizeAt(size_t width, size_t height)
 {
-	if(!mSVGImage || (width == 0 && height == 0))
+	if(!mSVGImage || (width == 0 && height == 0)) 
+    {
 		return;
+    }
 
 	if(width == 0)
 	{
@@ -86,16 +90,20 @@ void SVGResource::rasterizeAt(size_t width, size_t height)
 
 Eigen::Vector2f SVGResource::getSourceImageSize() const
 {
-	if(mSVGImage)
+	if(mSVGImage) 
+    {
 		return Eigen::Vector2f(mSVGImage->width, mSVGImage->height);
+    }
 
 	return Eigen::Vector2f::Zero();
 }
 
 void SVGResource::deinitSVG()
 {
-	if(mSVGImage)
+	if(mSVGImage) 
+    {
 		nsvgDelete(mSVGImage);
+    }
 
 	mSVGImage = NULL;
 }

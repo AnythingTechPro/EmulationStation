@@ -13,10 +13,12 @@ public:
 // useful helper/interpolation functions
 inline float clamp(float min, float max, float val)
 {
-	if(val < min)
+	if(val < min) 
+    {
 		val = min;
-	else if(val > max)
+    } else if(val > max) {
 		val = max;
+    }
 
 	return val;
 }
@@ -34,10 +36,15 @@ inline float smoothStep(float edge0, float edge1, float x)
 template<typename T>
 T lerp(const T& start, const T& end, float t)
 {
-	if(t <= 0.0f)
+	if(t <= 0.0f) 
+    {
 		return start;
-	if(t >= 1.0f)
+    }
+	
+    if(t >= 1.0f) 
+    {
 		return end;
+    }
 
 	return (start * (1 - t) + end * t);
 }

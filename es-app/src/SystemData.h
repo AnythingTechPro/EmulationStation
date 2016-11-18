@@ -13,7 +13,8 @@ class SystemData
 public:
 	SystemData(const std::string& name, const std::string& fullName, const std::string& startPath, const std::vector<std::string>& extensions, 
 		const std::string& command, const std::vector<PlatformIds::PlatformId>& platformIds, const std::string& themeFolder);
-	~SystemData();
+	
+    ~SystemData();
 
 	inline FileData* getRootFolder() const { return mRootFolder; };
 	inline const std::string& getName() const { return mName; }

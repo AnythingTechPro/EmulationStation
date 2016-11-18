@@ -257,14 +257,21 @@ bool InputManager::loadInputConfig(InputConfig* config)
 	}
 
 	pugi::xml_node root = doc.child("inputList");
-	if(!root)
+	if(!root) 
+    {
 		return false;
+    }
 
 	pugi::xml_node configNode = root.find_child_by_attribute("inputConfig", "deviceGUID", config->getDeviceGUIDString().c_str());
-	if(!configNode)
+	if(!configNode) {
 		configNode = root.find_child_by_attribute("inputConfig", "deviceName", config->getDeviceName().c_str());
-	if(!configNode)
-		return false;
+        
+        // check if configNode variable has changed...
+        if(!configNode) 
+        {
+            return false;
+        }
+    }
 
 	config->loadFromXML(configNode);
 	return true;
@@ -343,8 +350,10 @@ void InputManager::writeDeviceConfig(InputConfig* config)
 	}
 
 	pugi::xml_node root = doc.child("inputList");
-	if(!root)
+	if(!root) 
+    {
 		root = doc.append_child("inputList");
+    }
 
 	config->writeToXML(root);
 	doc.save_file(path.c_str());
@@ -417,23 +426,27 @@ bool InputManager::initialized() const
 
 int InputManager::getNumConfiguredDevices()
 {
-	int num = 0;
+	int num_devices = 0;
 	for(auto it = mInputConfigs.begin(); it != mInputConfigs.end(); it++)
 	{
 		if(it->second->isConfigured())
-			num++;
+			num_devices++;
 	}
 
-	if(mKeyboardInputConfig->isConfigured())
-		num++;
+	if(mKeyboardInputConfig->isConfigured()) 
+    {
+		num_devices++;
+    }
 
-	return num;
+	return num_devices;
 }
 
 std::string InputManager::getDeviceGUIDString(int deviceId)
 {
-	if(deviceId == DEVICE_KEYBOARD)
+	if(deviceId == DEVICE_KEYBOARD) 
+    {
 		return KEYBOARD_GUID_STRING;
+    }
 
 	auto it = mJoysticks.find(deviceId);
 	if(it == mJoysticks.end())
